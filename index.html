@@ -9,238 +9,287 @@
 <title>Планер</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
 :root {
-  --bg0: #000;
-  --bg1: #1c1c1e;
-  --bg2: #2c2c2e;
-  --bg3: #3a3a3c;
-  --text1: #fff;
-  --text2: rgba(235,235,245,.8);
-  --text3: rgba(235,235,245,.6);
-  --sep: rgba(84,84,88,.6);
-  --accent: #0a84ff;
+  --bg0: #000; --bg1: #1c1c1e; --bg2: #2c2c2e; --bg3: #3a3a3c;
+  --text1: #fff; --text2: rgba(235,235,245,.8); --text3: rgba(235,235,245,.5);
+  --sep: rgba(84,84,88,.5); --accent: #0a84ff;
   --font: -apple-system, 'Helvetica Neue', Arial, sans-serif;
-  --c-bad:    #8b2a2a;
-  --c-orange: #ff9f0a;
-  --c-yellow: #ffd60a;
-  --c-green:  #30d158;
-  --c-violet: #bf5af2;
+  --c-bad: #c0504d; --c-orange: #ff9f0a; --c-yellow: #e8c200; --c-green: #30d158; --c-violet: #bf5af2;
 }
-
-body {
-  font-family: var(--font);
-  background: var(--bg0);
-  color: var(--text1);
-  min-height: 100vh;
-  overscroll-behavior: none;
-  -webkit-font-smoothing: antialiased;
-}
-
+body { font-family: var(--font); background: var(--bg0); color: var(--text1); min-height: 100vh; overscroll-behavior: none; -webkit-font-smoothing: antialiased; }
 .screen { display: none; }
 .screen.active { display: block; }
 
-/* ===== TABS BAR ===== */
+/* TABS */
 .tabs-wrap {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  padding: 8px 16px calc(env(safe-area-inset-bottom, 0px) + 10px);
-  background: rgba(0,0,0,.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  position: fixed; bottom: 0; left: 0; right: 0;
+  padding: 8px 12px calc(env(safe-area-inset-bottom,0px) + 8px);
+  background: rgba(18,18,18,.94);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   z-index: 100;
-  display: flex;
-  justify-content: center;
 }
-.tabs {
-  display: flex;
-  background: #1c1c1e;
-  border-radius: 20px;
-  padding: 4px;
-  gap: 4px;
-  width: 100%;
-  max-width: 400px;
-}
+.tabs { display: flex; background: var(--bg1); border-radius: 22px; padding: 4px; gap: 4px; max-width: 460px; margin: 0 auto; }
 .tab-btn {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding: 9px 6px;
-  border-radius: 16px;
-  border: none;
-  background: transparent;
-  color: var(--text3);
-  font-family: var(--font);
-  font-size: 10px;
-  font-weight: 500;
-  cursor: pointer;
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 11px 6px; border-radius: 18px; border: none; background: transparent;
+  color: var(--text3); font-family: var(--font); font-size: 11px; font-weight: 500; cursor: pointer;
   transition: background .2s, color .2s;
 }
-.tab-btn.active {
-  background: #3a3a3c;
-  color: var(--text1);
-}
-.tab-btn svg { width: 22px; height: 22px; }
-.tab-btn:active { opacity: .7; }
+.tab-btn.active { background: var(--bg3); color: var(--text1); }
+.tab-btn svg { width: 25px; height: 25px; }
+.tab-btn:active { opacity: .65; }
 
-/* ===== SCROLL AREA ===== */
-.scroll-area {
-  padding: 0 0 120px;
-  min-height: 100vh;
-}
+/* SCROLL */
+.scroll-area { padding-bottom: 140px; }
 
-/* ===== HEADER ===== */
-.page-header {
-  padding: calc(env(safe-area-inset-top, 44px) + 12px) 20px 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-.page-title {
-  font-size: 34px;
-  font-weight: 700;
-  letter-spacing: -.5px;
-}
-.page-date {
-  font-size: 13px;
-  color: var(--text3);
-  text-align: right;
-  line-height: 1.5;
-}
+/* HEADER */
+.page-header { padding: calc(env(safe-area-inset-top,44px) + 14px) 20px 10px; display: flex; justify-content: space-between; align-items: flex-end; }
+.page-title { font-size: 34px; font-weight: 700; letter-spacing: -.5px; }
+.page-date { font-size: 13px; color: var(--text3); text-align: right; line-height: 1.5; }
 
-/* ===== KD CARD ===== */
-.kd-card {
-  margin: 8px 16px 12px;
-  background: var(--bg1);
-  border-radius: 16px;
-  padding: 18px 20px 18px;
-}
-.kd-lbl { font-size: 11px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: .6px; margin-bottom: 4px; }
+/* KD CARD */
+.kd-card { margin: 8px 16px 12px; background: var(--bg1); border-radius: 20px; padding: 18px 20px; }
+.kd-lbl { font-size: 11px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: .7px; margin-bottom: 4px; }
 .kd-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 12px; }
 .kd-num { font-size: 56px; font-weight: 300; letter-spacing: -2px; line-height: 1; transition: color .4s; }
 .kd-grade { font-size: 15px; font-weight: 500; transition: color .4s; color: var(--text3); }
 .kd-bar-wrap { height: 5px; background: var(--bg3); border-radius: 4px; overflow: hidden; position: relative; margin-bottom: 10px; }
-.kd-bar-base { position:absolute; left:0; top:0; height:100%; border-radius:4px; transition: width .5s cubic-bezier(.4,0,.2,1), background .4s; width:0%; background: var(--accent); }
-.kd-bar-bonus { position:absolute; top:0; height:100%; border-radius:0 4px 4px 0; transition: width .5s, left .5s; width:0%; left:0%; background: var(--c-green); }
+.kd-bar-base { position:absolute; left:0; top:0; height:100%; border-radius:4px; transition:width .5s cubic-bezier(.4,0,.2,1),background .4s; width:0%; }
+.kd-bar-bonus { position:absolute; top:0; height:100%; border-radius:0 4px 4px 0; transition:width .5s,left .5s; width:0%; left:0%; background:var(--c-green); }
 .kd-formula { font-size: 12px; color: var(--text3); min-height: 16px; }
 
-/* ===== STATS ===== */
+/* STATS */
 .stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 0 16px 16px; }
-.stat-pill { background: var(--bg1); border-radius: 12px; padding: 10px 12px; text-align: center; }
-.stat-num { font-size: 24px; font-weight: 500; letter-spacing: -.5px; }
-.stat-lbl { font-size: 11px; color: var(--text3); margin-top: 1px; }
+.stat-pill { background: var(--bg1); border-radius: 16px; padding: 14px 12px; text-align: center; }
+.stat-num { font-size: 28px; font-weight: 500; letter-spacing: -.5px; }
+.stat-lbl { font-size: 11px; color: var(--text3); margin-top: 3px; }
 
-/* ===== SECTION ===== */
-.sec-head { display: flex; justify-content: space-between; align-items: center; padding: 4px 20px 8px; }
+/* SECTION */
+.sec-head { display: flex; justify-content: space-between; align-items: center; padding: 8px 20px 8px; }
 .sec-title { font-size: 20px; font-weight: 600; letter-spacing: -.3px; }
-.badge-bonus { font-size: 11px; font-weight: 500; background: rgba(48,209,88,.15); color: var(--c-green); border-radius: 20px; padding: 3px 10px; }
+.badge-bonus { font-size: 12px; font-weight: 500; background: rgba(48,209,88,.15); color: var(--c-green); border-radius: 20px; padding: 5px 13px; }
 
-/* ===== TASKS ===== */
-.tasks-card { margin: 0 16px 8px; background: var(--bg1); border-radius: 16px; overflow: hidden; }
-.task-item { display: flex; align-items: center; gap: 10px; padding: 11px 14px; border-bottom: .5px solid var(--sep); min-height: 60px; }
+/* TASKS */
+.tasks-card { margin: 0 16px 8px; background: var(--bg1); border-radius: 20px; overflow: hidden; }
+.task-item { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-bottom: .5px solid var(--sep); min-height: 72px; }
 .task-item:last-child { border-bottom: none; }
-.task-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; transition: background .3s; background: var(--bg3); }
-.task-name { flex: 1; font-size: 15px; line-height: 1.35; color: var(--text1); }
+.task-dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; transition: background .3s; }
+.task-info { flex: 1; min-width: 0; }
+.task-name { font-size: 16px; line-height: 1.3; }
 .task-name.done { color: var(--text3); text-decoration: line-through; }
 .task-name.half { color: var(--text2); }
-.seg { display: flex; background: var(--bg2); border-radius: 9px; padding: 2px; gap: 2px; flex-shrink: 0; }
-.seg-btn { border: none; border-radius: 7px; background: transparent; color: var(--text3); font-size: 12px; font-weight: 600; padding: 5px 9px; cursor: pointer; transition: all .15s; font-family: var(--font); }
-.seg-btn:active { opacity: .7; }
+.task-deadline { font-size: 12px; margin-top: 3px; font-weight: 500; }
+
+/* SEGMENTED — BIG */
+.seg { display: flex; background: var(--bg2); border-radius: 14px; padding: 3px; gap: 3px; flex-shrink: 0; }
+.seg-btn {
+  border: none; border-radius: 11px; background: transparent;
+  color: var(--text3); font-size: 16px; font-weight: 600;
+  min-width: 46px; height: 46px; padding: 0 8px;
+  cursor: pointer; transition: all .15s; font-family: var(--font);
+  display: flex; align-items: center; justify-content: center;
+}
+.seg-btn:active { transform: scale(.88); }
 .seg-btn.s-none.on { background: var(--bg3); color: var(--text1); }
 .seg-btn.s-half.on { background: var(--c-orange); color: #000; }
 .seg-btn.s-done.on { background: var(--c-green); color: #000; }
-.del-btn { background: none; border: none; color: var(--text3); font-size: 20px; line-height: 1; cursor: pointer; padding: 4px; border-radius: 6px; flex-shrink: 0; }
-.del-btn:active { color: #ff453a; }
-.empty-row { padding: 16px; color: var(--text3); font-size: 14px; text-align: center; }
 
-/* ===== ADD ROW ===== */
-.add-row { display: flex; gap: 8px; margin: 0 16px 20px; }
-.add-row input { flex: 1; background: var(--bg1); border: none; border-radius: 12px; padding: 12px 14px; font-size: 15px; color: var(--text1); font-family: var(--font); outline: none; -webkit-appearance: none; appearance: none; }
+.del-btn {
+  background: none; border: none; color: var(--text3); font-size: 24px; line-height: 1;
+  cursor: pointer; width: 40px; height: 40px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.del-btn:active { color: #ff453a; background: rgba(255,69,58,.12); }
+.empty-row { padding: 22px; color: var(--text3); font-size: 15px; text-align: center; }
+
+/* ADD ROW */
+.add-row { display: flex; gap: 8px; margin: 0 16px 20px; align-items: center; }
+.add-row input {
+  flex: 1; background: var(--bg1); border: none; border-radius: 16px;
+  padding: 16px 16px; font-size: 16px; color: var(--text1);
+  font-family: var(--font); outline: none; -webkit-appearance: none; appearance: none;
+}
 .add-row input::placeholder { color: var(--text3); }
-.add-row button { background: var(--accent); border: none; border-radius: 12px; color: #fff; font-size: 24px; font-weight: 300; width: 44px; height: 44px; cursor: pointer; font-family: var(--font); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.add-row button:active { opacity: .8; transform: scale(.95); }
+.add-row input:focus { background: #28282a; }
+.add-btn {
+  background: var(--accent); border: none; border-radius: 16px;
+  color: #fff; font-size: 28px; font-weight: 300;
+  width: 54px; height: 54px; cursor: pointer; font-family: var(--font);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.add-btn:active { opacity: .75; transform: scale(.92); }
 
-/* ===== COLOR SCALE ===== */
-.colors-card { margin: 4px 16px 16px; background: var(--bg1); border-radius: 16px; padding: 14px 16px; }
-.colors-title { font-size: 11px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: .6px; margin-bottom: 10px; }
-.color-scale-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
-.color-tile { border-radius: 10px; padding: 8px 4px; text-align: center; }
+/* COLOR SCALE */
+.colors-card { margin: 0 16px 16px; background: var(--bg1); border-radius: 20px; padding: 14px 16px; }
+.colors-lbl { font-size: 11px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: .6px; margin-bottom: 10px; }
+.color-scale-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 6px; }
+.color-tile { border-radius: 10px; padding: 9px 4px; text-align: center; }
 .ct-range { font-size: 10px; font-weight: 600; }
 .ct-name { font-size: 9px; margin-top: 2px; opacity: .85; }
-.ct-bad    { background: rgba(139,42,42,.2);   color: #c0504d; }
-.ct-orange { background: rgba(255,159,10,.18); color: var(--c-orange); }
-.ct-yellow { background: rgba(255,214,10,.18); color: #e0bb00; }
-.ct-green  { background: rgba(48,209,88,.15);  color: var(--c-green); }
-.ct-violet { background: rgba(191,90,242,.18); color: var(--c-violet); }
+.ct-bad    { background: rgba(192,80,77,.2);  color: #e07070; }
+.ct-orange { background: rgba(255,159,10,.18);color: var(--c-orange); }
+.ct-yellow { background: rgba(232,194,0,.18); color: #e8c200; }
+.ct-green  { background: rgba(48,209,88,.15); color: var(--c-green); }
+.ct-violet { background: rgba(191,90,242,.18);color: var(--c-violet); }
 
-/* ===== RESET ===== */
-.reset-row { display: flex; justify-content: center; margin: 4px 16px 8px; }
-.reset-btn { background: rgba(255,69,58,.12); color: #ff453a; border: none; border-radius: 12px; font-size: 14px; font-weight: 500; padding: 11px 28px; cursor: pointer; font-family: var(--font); }
-.reset-btn:active { background: rgba(255,69,58,.22); transform: scale(.97); }
+/* RESET */
+.reset-row { display: flex; margin: 4px 16px 12px; }
+.reset-btn {
+  background: rgba(255,69,58,.12); color: #ff453a; border: none;
+  border-radius: 16px; font-size: 16px; font-weight: 500;
+  padding: 16px; cursor: pointer; font-family: var(--font); width: 100%;
+}
+.reset-btn:active { background: rgba(255,69,58,.22); transform: scale(.98); }
 
-/* ===== CONGRATS OVERLAY ===== */
+/* CONGRATS */
 .congrats-overlay {
   position: fixed; inset: 0; z-index: 999;
-  background: rgba(0,0,0,.85);
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; pointer-events: none;
-  transition: opacity .35s;
+  background: rgba(0,0,0,.9);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity .3s;
 }
 .congrats-overlay.show { opacity: 1; pointer-events: auto; }
-.congrats-box { text-align: center; padding: 40px 32px; }
-.congrats-emoji { font-size: 72px; line-height: 1; margin-bottom: 20px; }
-.congrats-text { font-size: 26px; font-weight: 700; letter-spacing: -.5px; line-height: 1.3; color: #fff; }
+.congrats-emoji { font-size: 88px; line-height: 1; margin-bottom: 28px; }
+.congrats-text { font-size: 26px; font-weight: 700; letter-spacing: -.5px; line-height: 1.35; color: #fff; text-align: center; padding: 0 32px; }
 
-/* ===== HISTORY ===== */
+/* DEADLINE MODAL */
+.modal-backdrop {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,.6);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  display: flex; align-items: flex-end; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity .25s;
+}
+.modal-backdrop.show { opacity: 1; pointer-events: auto; }
+.modal-sheet {
+  background: #1c1c1e; border-radius: 22px 22px 0 0;
+  padding: 20px 20px calc(env(safe-area-inset-bottom,0px) + 24px);
+  width: 100%; max-width: 460px;
+  transform: translateY(100%); transition: transform .3s cubic-bezier(.4,0,.2,1);
+}
+.modal-backdrop.show .modal-sheet { transform: translateY(0); }
+.modal-handle { width: 36px; height: 4px; background: var(--bg3); border-radius: 2px; margin: 0 auto 20px; }
+.modal-title { font-size: 18px; font-weight: 600; margin-bottom: 18px; }
+.modal-row { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.modal-lbl { font-size: 13px; color: var(--text3); }
+.modal-input {
+  background: var(--bg2); border: none; border-radius: 12px;
+  padding: 14px 16px; font-size: 16px; color: var(--text1);
+  font-family: var(--font); outline: none; width: 100%;
+  -webkit-appearance: none; appearance: none;
+}
+.modal-input::placeholder { color: var(--text3); }
+input[type="date"].modal-input::-webkit-calendar-picker-indicator { filter: invert(1); opacity: .5; }
+.modal-btns { display: flex; gap: 10px; margin-top: 8px; }
+.modal-btn {
+  flex: 1; padding: 16px; border-radius: 14px; border: none;
+  font-size: 16px; font-weight: 600; cursor: pointer; font-family: var(--font);
+}
+.modal-btn.cancel { background: var(--bg2); color: var(--text2); }
+.modal-btn.save   { background: var(--accent); color: #fff; }
+.modal-btn:active { opacity: .75; transform: scale(.97); }
+
+/* DEADLINE BADGE */
+.deadline-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; font-weight: 600; border-radius: 8px; padding: 3px 8px; margin-top: 4px;
+  cursor: pointer;
+}
+
+/* HISTORY */
 .hist-section { margin: 8px 16px 16px; }
-.hist-section-title { font-size: 11px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: .6px; margin-bottom: 8px; padding-left: 4px; }
-.hist-card { background: var(--bg1); border-radius: 16px; overflow: hidden; }
-.hist-row { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: .5px solid var(--sep); }
+.hist-lbl { font-size: 11px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: .6px; margin-bottom: 8px; padding-left: 4px; }
+.hist-card { background: var(--bg1); border-radius: 20px; overflow: hidden; }
+.hist-row { display: flex; align-items: center; gap: 14px; padding: 15px 16px; border-bottom: .5px solid var(--sep); }
 .hist-row:last-child { border-bottom: none; }
-.hist-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-.hist-date { flex: 1; font-size: 15px; }
-.hist-kd { font-size: 15px; font-weight: 500; font-variant-numeric: tabular-nums; }
-.hist-color-label { font-size: 12px; color: var(--text3); }
-.hist-empty { padding: 20px; text-align: center; color: var(--text3); font-size: 14px; }
+.hist-dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+.hist-date { flex: 1; font-size: 16px; }
+.hist-kd { font-size: 17px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.hist-color-label { font-size: 12px; color: var(--text3); text-align: right; margin-top: 2px; }
+.hist-empty { padding: 22px; text-align: center; color: var(--text3); font-size: 15px; }
 
-/* ===== STATS PAGE ===== */
-.stats-page { padding-bottom: 120px; }
-.stats-page .page-header { padding-bottom: 16px; }
-.period-tabs { display: flex; gap: 6px; margin: 0 16px 16px; }
-.period-btn { flex: 1; padding: 8px; border-radius: 10px; border: none; background: var(--bg1); color: var(--text3); font-size: 13px; font-weight: 500; cursor: pointer; font-family: var(--font); }
+/* STATS */
+.stats-page { padding-bottom: 140px; }
+.period-tabs { display: flex; gap: 8px; margin: 0 16px 16px; }
+.period-btn {
+  flex: 1; padding: 12px; border-radius: 14px; border: none;
+  background: var(--bg1); color: var(--text3); font-size: 15px;
+  font-weight: 500; cursor: pointer; font-family: var(--font);
+}
 .period-btn.active { background: var(--bg3); color: var(--text1); }
-.summary-card { margin: 0 16px 12px; background: var(--bg1); border-radius: 16px; padding: 16px; }
+.period-btn:active { opacity: .7; }
+.summary-card { margin: 0 16px 12px; background: var(--bg1); border-radius: 20px; padding: 16px; }
 .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.sum-cell { background: var(--bg2); border-radius: 12px; padding: 12px; }
-.sum-val { font-size: 26px; font-weight: 500; letter-spacing: -.5px; }
-.sum-lbl { font-size: 11px; color: var(--text3); margin-top: 3px; }
-.chart-wrap { margin: 0 16px 16px; background: var(--bg1); border-radius: 16px; padding: 16px; }
-.chart-title { font-size: 13px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 12px; }
-.bar-chart { display: flex; align-items: flex-end; gap: 3px; height: 80px; }
-.bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; justify-content: flex-end; }
-.bar-fill { width: 100%; border-radius: 4px 4px 0 0; min-height: 3px; transition: height .4s; }
-.bar-lbl { font-size: 9px; color: var(--text3); white-space: nowrap; }
+.sum-cell { background: var(--bg2); border-radius: 14px; padding: 14px; }
+.sum-val { font-size: 28px; font-weight: 500; letter-spacing: -.5px; }
+.sum-lbl { font-size: 11px; color: var(--text3); margin-top: 4px; }
+.chart-wrap { margin: 0 16px 16px; background: var(--bg1); border-radius: 20px; padding: 16px; }
+.chart-lbl { font-size: 11px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: .6px; margin-bottom: 14px; }
+.bar-chart { display: flex; align-items: flex-end; gap: 4px; height: 90px; }
+.bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; height: 100%; justify-content: flex-end; }
+.bar-fill { width: 100%; border-radius: 5px 5px 0 0; min-height: 4px; }
+.bar-lbl { font-size: 10px; color: var(--text3); white-space: nowrap; }
+
+/* SETTINGS */
+.settings-page { padding-bottom: 140px; }
+.settings-card { margin: 8px 16px 12px; background: var(--bg1); border-radius: 20px; overflow: hidden; }
+.setting-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 18px; border-bottom: .5px solid var(--sep);
+  min-height: 60px;
+}
+.setting-row:last-child { border-bottom: none; }
+.setting-icon { font-size: 22px; width: 30px; text-align: center; flex-shrink: 0; }
+.setting-info { flex: 1; }
+.setting-name { font-size: 16px; }
+.setting-desc { font-size: 13px; color: var(--text3); margin-top: 2px; }
+
+/* TOGGLE */
+.toggle { position: relative; width: 51px; height: 31px; flex-shrink: 0; }
+.toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+.toggle-track {
+  position: absolute; inset: 0; background: var(--bg3);
+  border-radius: 31px; cursor: pointer; transition: background .25s;
+}
+.toggle input:checked + .toggle-track { background: #30d158; }
+.toggle-thumb {
+  position: absolute; top: 2px; left: 2px;
+  width: 27px; height: 27px; background: #fff; border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,0,0,.4);
+  transition: transform .25s cubic-bezier(.4,0,.2,1); pointer-events: none;
+}
+.toggle input:checked ~ .toggle-thumb { transform: translateX(20px); }
 </style>
 </head>
 <body>
 
-<!-- CONGRATS OVERLAY -->
 <div class="congrats-overlay" id="congrats">
-  <div class="congrats-box">
-    <div class="congrats-emoji" id="c-emoji"></div>
-    <div class="congrats-text" id="c-text"></div>
+  <div class="congrats-emoji" id="c-emoji"></div>
+  <div class="congrats-text" id="c-text"></div>
+</div>
+
+<!-- DEADLINE MODAL -->
+<div class="modal-backdrop" id="dl-modal">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="dl-modal-title">Срок выполнения</div>
+    <div class="modal-row">
+      <div class="modal-lbl">Дата дедлайна</div>
+      <input type="date" class="modal-input" id="dl-date-input">
+    </div>
+    <div class="modal-btns">
+      <button class="modal-btn cancel" onclick="closeDLModal()">Отмена</button>
+      <button class="modal-btn save" onclick="saveDL()">Сохранить</button>
+    </div>
   </div>
 </div>
 
-<!-- ===== SCREEN: TODAY ===== -->
+<!-- TODAY -->
 <div class="screen active scroll-area" id="screen-today">
   <div class="page-header">
     <div class="page-title">Сегодня</div>
     <div class="page-date" id="header-date"></div>
   </div>
-
   <div class="kd-card">
     <div class="kd-lbl">Коэффициент дня</div>
     <div class="kd-row">
@@ -253,20 +302,17 @@ body {
     </div>
     <div class="kd-formula" id="kd-formula"></div>
   </div>
-
   <div class="stats-row">
     <div class="stat-pill"><div class="stat-num" id="st-done" style="color:var(--c-green)">0</div><div class="stat-lbl">готово</div></div>
     <div class="stat-pill"><div class="stat-num" id="st-half" style="color:var(--c-orange)">0</div><div class="stat-lbl">наполовину</div></div>
     <div class="stat-pill"><div class="stat-num" id="st-left" style="color:var(--text3)">0</div><div class="stat-lbl">осталось</div></div>
   </div>
-
   <div class="sec-head"><div class="sec-title">Обязательные</div></div>
   <div class="tasks-card" id="req-list"></div>
   <div class="add-row">
     <input type="text" id="req-input" placeholder="Новое обязательное дело…" maxlength="50">
-    <button onclick="addTask('req')">+</button>
+    <button class="add-btn" onclick="addTask('req')">+</button>
   </div>
-
   <div class="sec-head">
     <div class="sec-title">Необязательные</div>
     <span class="badge-bonus">бонус +0.1</span>
@@ -274,12 +320,20 @@ body {
   <div class="tasks-card" id="opt-list"></div>
   <div class="add-row">
     <input type="text" id="opt-input" placeholder="Новое необязательное дело…" maxlength="50">
-    <button onclick="addTask('opt')">+</button>
+    <button class="add-btn" onclick="addTask('opt')">+</button>
   </div>
 
-  <div style="padding: 0 16px 4px;">
-    <div class="colors-title" style="font-size:11px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;">Цвет для планера</div>
+  <!-- DEADLINE TASKS -->
+  <div class="sec-head">
+    <div class="sec-title">Дедлайны</div>
   </div>
+  <div class="tasks-card" id="dl-list"></div>
+  <div class="add-row">
+    <input type="text" id="dl-input" placeholder="Дело с дедлайном…" maxlength="50">
+    <button class="add-btn" onclick="openDLModalNew()" style="background:#636366;">📅</button>
+  </div>
+
+  <div style="padding:0 16px 8px;"><div class="colors-lbl" style="font-size:11px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;">Цвет для планера</div></div>
   <div class="colors-card" style="margin-top:0;">
     <div class="color-scale-grid">
       <div class="color-tile ct-bad"><div class="ct-range">0–0.29</div><div class="ct-name">бордовый</div></div>
@@ -289,431 +343,471 @@ body {
       <div class="color-tile ct-violet"><div class="ct-range">0.90+</div><div class="ct-name">фиолет.</div></div>
     </div>
   </div>
-
-  <div class="reset-row">
-    <button class="reset-btn" onclick="resetDay()">Сбросить день</button>
-  </div>
+  <div class="reset-row"><button class="reset-btn" onclick="resetDay()">Сбросить день</button></div>
 </div>
 
-<!-- ===== SCREEN: HISTORY ===== -->
+<!-- HISTORY -->
 <div class="screen scroll-area" id="screen-history">
-  <div class="page-header" style="padding-bottom:16px;">
-    <div class="page-title">История</div>
-  </div>
-
-  <div class="hist-section" id="hist-today-wrap">
-    <div class="hist-section-title">Сегодня</div>
-    <div class="hist-card" id="hist-today-card"></div>
-  </div>
-
-  <div class="hist-section" id="hist-week-wrap">
-    <div class="hist-section-title">Эта неделя</div>
-    <div class="hist-card" id="hist-week-card"></div>
-  </div>
-
-  <div class="hist-section" id="hist-older-wrap">
-    <div class="hist-section-title">Раньше</div>
-    <div class="hist-card" id="hist-older-card"></div>
-  </div>
+  <div class="page-header" style="padding-bottom:16px;"><div class="page-title">История</div></div>
+  <div class="hist-section"><div class="hist-lbl">Сегодня</div><div class="hist-card" id="hist-today-card"></div></div>
+  <div class="hist-section"><div class="hist-lbl">Эта неделя</div><div class="hist-card" id="hist-week-card"></div></div>
+  <div class="hist-section"><div class="hist-lbl">Раньше</div><div class="hist-card" id="hist-older-card"></div></div>
 </div>
 
-<!-- ===== SCREEN: STATS ===== -->
+<!-- STATS -->
 <div class="screen stats-page" id="screen-stats">
-  <div class="page-header">
-    <div class="page-title">Сводка</div>
-  </div>
-
+  <div class="page-header" style="padding-bottom:16px;"><div class="page-title">Сводка</div></div>
   <div class="period-tabs">
     <button class="period-btn active" onclick="setPeriod('week',this)">Неделя</button>
     <button class="period-btn" onclick="setPeriod('month',this)">Месяц</button>
     <button class="period-btn" onclick="setPeriod('year',this)">Год</button>
   </div>
-
   <div class="summary-card">
     <div class="summary-grid">
       <div class="sum-cell"><div class="sum-val" id="sum-avg">—</div><div class="sum-lbl">средний КД</div></div>
       <div class="sum-cell"><div class="sum-val" id="sum-days">—</div><div class="sum-lbl">дней записано</div></div>
       <div class="sum-cell"><div class="sum-val" id="sum-best">—</div><div class="sum-lbl">лучший день</div></div>
-      <div class="sum-cell"><div class="sum-val" id="sum-perfect">—</div><div class="sum-lbl">идеальных дней</div></div>
+      <div class="sum-cell"><div class="sum-val" id="sum-perfect">—</div><div class="sum-lbl">фиолетовых дней</div></div>
     </div>
   </div>
-
   <div class="chart-wrap">
-    <div class="chart-title" id="chart-title">КД по дням</div>
+    <div class="chart-lbl" id="chart-title">КД по дням</div>
     <div class="bar-chart" id="bar-chart"></div>
   </div>
 </div>
 
-<!-- ===== TABS ===== -->
+<!-- SETTINGS -->
+<div class="screen settings-page" id="screen-settings">
+  <div class="page-header" style="padding-bottom:16px;"><div class="page-title">Настройки</div></div>
+  <div style="padding:0 16px 8px;"><div class="colors-lbl" style="font-size:11px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;">Приложение</div></div>
+  <div class="settings-card">
+    <div class="setting-row">
+      <div class="setting-icon">📳</div>
+      <div class="setting-info">
+        <div class="setting-name">Вибрация</div>
+        <div class="setting-desc">Отклик при нажатии кнопок</div>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" id="toggle-vibro" checked onchange="saveSettings()">
+        <div class="toggle-track"></div>
+        <div class="toggle-thumb"></div>
+      </label>
+    </div>
+    <div class="setting-row">
+      <div class="setting-icon">🎊</div>
+      <div class="setting-info">
+        <div class="setting-name">Поздравление</div>
+        <div class="setting-desc">Анимация когда все дела выполнены</div>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" id="toggle-congrats" checked onchange="saveSettings()">
+        <div class="toggle-track"></div>
+        <div class="toggle-thumb"></div>
+      </label>
+    </div>
+  </div>
+  <div style="padding:0 16px 8px;margin-top:8px;"><div class="colors-lbl" style="font-size:11px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;">Шкала дедлайнов</div></div>
+  <div class="settings-card">
+    <div class="setting-row">
+      <div style="width:12px;height:12px;border-radius:50%;background:#30d158;flex-shrink:0;"></div>
+      <div class="setting-info"><div class="setting-name">Зелёный</div><div class="setting-desc">Больше 7 дней до дедлайна</div></div>
+    </div>
+    <div class="setting-row">
+      <div style="width:12px;height:12px;border-radius:50%;background:#e8c200;flex-shrink:0;"></div>
+      <div class="setting-info"><div class="setting-name">Жёлтый</div><div class="setting-desc">3–7 дней до дедлайна</div></div>
+    </div>
+    <div class="setting-row">
+      <div style="width:12px;height:12px;border-radius:50%;background:#ff9f0a;flex-shrink:0;"></div>
+      <div class="setting-info"><div class="setting-name">Оранжевый</div><div class="setting-desc">1–3 дня до дедлайна</div></div>
+    </div>
+    <div class="setting-row">
+      <div style="width:12px;height:12px;border-radius:50%;background:#c0504d;flex-shrink:0;"></div>
+      <div class="setting-info"><div class="setting-name">Красный</div><div class="setting-desc">Сегодня или просрочено</div></div>
+    </div>
+  </div>
+  <div style="padding:0 16px 8px;margin-top:8px;"><div class="colors-lbl" style="font-size:11px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;">Данные</div></div>
+  <div class="settings-card">
+    <div class="setting-row" style="cursor:pointer;" onclick="clearHistory()">
+      <div class="setting-icon">🗑️</div>
+      <div class="setting-info"><div class="setting-name" style="color:#ff453a;">Очистить историю</div><div class="setting-desc">Удалить все записи прошлых дней</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
 <div class="tabs-wrap">
   <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('today',this)" id="tab-today">
+    <button class="tab-btn active" onclick="switchTab('today',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="3"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
       Сегодня
     </button>
-    <button class="tab-btn" onclick="switchTab('history',this)" id="tab-history">
+    <button class="tab-btn" onclick="switchTab('history',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
       История
     </button>
-    <button class="tab-btn" onclick="switchTab('stats',this)" id="tab-stats">
+    <button class="tab-btn" onclick="switchTab('stats',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
       Сводка
+    </button>
+    <button class="tab-btn" onclick="switchTab('settings',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Настройки
     </button>
   </div>
 </div>
 
 <script>
-var STORE = 'planner3';
-var state;
+var STORE = 'planner5';
+var state, settings;
+var wasAllDone = false;
+var currentPeriod = 'week';
+var dlEditId = null;
 
 var CONGRATS = [
-  ['🎉','Все дела сделаны! Ты молодец!'],
-  ['🔥','День закрыт на 100%! Огонь!'],
-  ['⚡️','Всё выполнено! Энергия зашкаливает!'],
-  ['🏆','Чемпион дня! Все дела готовы!'],
-  ['✨','Блестяще! День прошёл идеально!'],
-  ['🚀','Взлёт! Все задачи выполнены!'],
-  ['💪','Силища! Ни одного невыполненного!'],
-  ['🎯','В яблочко! Все цели достигнуты!'],
-  ['🌟','Звёздный день! Всё сделано!'],
-  ['👑','Королевский результат! 100%!'],
-  ['🎸','Рок-звезда продуктивности!'],
-  ['🦁','Лев сегодня! Всё покорено!'],
-  ['🌈','Радужный день — всё выполнено!'],
-  ['⭐️','Все звёзды собраны! Молодец!'],
-  ['🍀','Удачный день и все дела готовы!'],
-  ['🎊','Конфетти заслужено — 100%!'],
-  ['🏅','Медаль дня твоя! Всё сделал!'],
-  ['💥','Взрыв продуктивности! Браво!'],
-  ['🎈','Воздушные шары заслужены!'],
-  ['🌞','Солнечный и продуктивный день!'],
-  ['🦅','Орёл! Поднялся над всеми делами!'],
-  ['💎','Бриллиантовый день — без изъянов!'],
+  ['🎉','Все дела сделаны! Ты молодец!'],['🔥','День закрыт на 100%! Огонь!'],
+  ['⚡️','Всё выполнено! Энергия зашкаливает!'],['🏆','Чемпион дня! Все дела готовы!'],
+  ['✨','Блестяще! День прошёл идеально!'],['🚀','Взлёт! Все задачи выполнены!'],
+  ['💪','Силища! Ни одного невыполненного!'],['🎯','В яблочко! Все цели достигнуты!'],
+  ['🌟','Звёздный день! Всё сделано!'],['👑','Королевский результат! 100%!'],
+  ['🎸','Рок-звезда продуктивности!'],['🦁','Лев сегодня! Всё покорено!'],
+  ['🌈','Радужный день — всё выполнено!'],['⭐️','Все звёзды собраны! Молодец!'],
+  ['🍀','Удачный день и все дела готовы!'],['🎊','Конфетти заслужено — 100%!'],
+  ['🏅','Медаль дня твоя! Всё сделал!'],['💥','Взрыв продуктивности! Браво!'],
+  ['🎈','Воздушные шары заслужены!'],['🌞','Солнечный и продуктивный день!'],
+  ['🦅','Орёл! Поднялся над всеми делами!'],['💎','Бриллиантовый день — без изъянов!'],
   ['🎶','Музыка побед! Все дела закрыты!'],
 ];
 
-function loadState() {
-  try {
-    var s = localStorage.getItem(STORE);
-    if (s) return JSON.parse(s);
-  } catch(e) {}
-  return makeDefault();
+function pad(n){return n<10?'0'+n:''+n;}
+function todayKey(){var d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+
+function vibrate(pattern) {
+  if (!settings.vibro) return;
+  try { if (navigator.vibrate) navigator.vibrate(pattern); } catch(e){}
 }
 
+function loadState() {
+  try{var s=localStorage.getItem(STORE);if(s)return JSON.parse(s);}catch(e){}
+  return makeDefault();
+}
 function makeDefault() {
   return {
-    req: [
+    req:[
       {id:'r1',name:'Сделать отчёт',status:'none'},
       {id:'r2',name:'Позвонить клиенту',status:'none'},
       {id:'r3',name:'Разобрать почту',status:'none'},
       {id:'r4',name:'Тренировка',status:'none'},
       {id:'r5',name:'Прочитать 20 страниц',status:'none'},
     ],
-    opt: [{id:'o1',name:'Убраться в комнате',status:'none'}],
-    nextId: 10,
-    history: {},
-    lastCongratsDate: ''
+    opt:[{id:'o1',name:'Убраться в комнате',status:'none'}],
+    deadlines:[],
+    nextId:10, history:{}, lastCongratsDate:''
   };
 }
-
-function save() {
-  try { localStorage.setItem(STORE, JSON.stringify(state)); } catch(e) {}
+function loadSettings() {
+  try{var s=localStorage.getItem(STORE+'_settings');if(s)return JSON.parse(s);}catch(e){}
+  return {vibro:true, congrats:true};
+}
+function save(){try{localStorage.setItem(STORE,JSON.stringify(state));}catch(e){}}
+function saveSettings(){
+  settings.vibro = document.getElementById('toggle-vibro').checked;
+  settings.congrats = document.getElementById('toggle-congrats').checked;
+  try{localStorage.setItem(STORE+'_settings',JSON.stringify(settings));}catch(e){}
 }
 
-function todayKey() {
-  var d = new Date();
-  return d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate());
+function colorForKD(kd){
+  if(kd<0.3) return {color:'#c0504d',label:'бордовый'};
+  if(kd<0.5) return {color:'#ff9f0a',label:'оранжевый'};
+  if(kd<0.7) return {color:'#e8c200',label:'жёлтый'};
+  if(kd<0.9) return {color:'#30d158',label:'зелёный'};
+  return {color:'#bf5af2',label:'фиолетовый'};
 }
 
-function pad(n) { return n < 10 ? '0'+n : ''+n; }
-
-function calcKD() {
-  var req = state.req;
-  if (!req.length) return {kd:0, base:0, bonus:0, done:0, half:0, total:0, valid:false};
-  var done = 0, half = 0;
-  for (var i=0;i<req.length;i++) {
-    if (req[i].status==='done') done++;
-    else if (req[i].status==='half') half++;
-  }
-  var total = req.length;
-  var base = (done + 0.5*half) / total;
-  var optDone=0, optHalf=0;
-  for (var j=0;j<state.opt.length;j++) {
-    if (state.opt[j].status==='done') optDone++;
-    else if (state.opt[j].status==='half') optHalf++;
-  }
-  var rawBonus = optDone*0.1 + optHalf*0.05;
-  var bonus = Math.min(rawBonus, 0.3);
-  return {kd: base+bonus, base:base, bonus:bonus, done:done, half:half, total:total, valid:true};
+function deadlineColor(dateStr) {
+  var today = new Date(); today.setHours(0,0,0,0);
+  var dl = new Date(dateStr+'T00:00:00');
+  var days = Math.round((dl - today) / 86400000);
+  if (days <= 0) return {color:'#c0504d', bg:'rgba(192,80,77,.18)', text:'просрочено!', emoji:'🔴'};
+  if (days <= 3) return {color:'#ff9f0a', bg:'rgba(255,159,10,.18)', text: days===1?'завтра':days+' дня', emoji:'🟠'};
+  if (days <= 7) return {color:'#e8c200', bg:'rgba(232,194,0,.18)', text:days+' дней', emoji:'🟡'};
+  return {color:'#30d158', bg:'rgba(48,209,88,.12)', text:days+' дней', emoji:'🟢'};
 }
 
-function colorForKD(kd) {
-  if (kd < 0.3)  return {color:'#c0504d', label:'бордовый'};
-  if (kd < 0.5)  return {color:'#ff9f0a', label:'оранжевый'};
-  if (kd < 0.7)  return {color:'#ffd60a', label:'жёлтый'};
-  if (kd < 0.9)  return {color:'#30d158', label:'зелёный'};
-  return {color:'#bf5af2', label:'фиолетовый'};
+function calcKD(){
+  var req=state.req;
+  if(!req.length) return {valid:false};
+  var done=0,half=0;
+  for(var i=0;i<req.length;i++){if(req[i].status==='done')done++;else if(req[i].status==='half')half++;}
+  var total=req.length, base=(done+0.5*half)/total;
+  var od=0,oh=0;
+  for(var j=0;j<state.opt.length;j++){if(state.opt[j].status==='done')od++;else if(state.opt[j].status==='half')oh++;}
+  var bonus=Math.min(od*0.1+oh*0.05,0.3);
+  return {kd:base+bonus,base:base,bonus:bonus,done:done,half:half,total:total,valid:true};
 }
 
-var wasAllDone = false;
-
-function renderToday() {
-  // tasks
-  var rl = document.getElementById('req-list');
-  rl.innerHTML = state.req.length ? state.req.map(function(t){return rowHTML(t,'req');}).join('') : '<div class="empty-row">Нет дел — добавь ниже</div>';
-  var ol = document.getElementById('opt-list');
-  ol.innerHTML = state.opt.length ? state.opt.map(function(t){return rowHTML(t,'opt');}).join('') : '<div class="empty-row">Нет дел — добавь ниже</div>';
-
-  var c = calcKD();
-  document.getElementById('st-done').textContent = c.done;
-  document.getElementById('st-half').textContent = c.half;
-  document.getElementById('st-left').textContent = c.total - c.done - c.half;
-
-  if (!c.valid) {
-    document.getElementById('kd-num').textContent = '—';
-    document.getElementById('kd-grade').textContent = 'добавь дела';
-    document.getElementById('kd-grade').style.color = 'rgba(235,235,245,.6)';
-    document.getElementById('kd-num').style.color = '#fff';
-    document.getElementById('bar-base').style.width = '0%';
-    document.getElementById('bar-bonus').style.width = '0%';
-    document.getElementById('kd-formula').textContent = '';
-    return;
-  }
-
-  var cl = colorForKD(c.kd);
-  document.getElementById('kd-num').textContent = c.kd.toFixed(2);
-  document.getElementById('kd-num').style.color = cl.color;
-  document.getElementById('kd-grade').textContent = cl.label;
-  document.getElementById('kd-grade').style.color = cl.color;
-
-  var barPct = Math.min(c.base*100, 100);
-  document.getElementById('bar-base').style.width = barPct+'%';
-  document.getElementById('bar-base').style.background = cl.color;
-  var bonusPct = Math.min(c.bonus*100, 100-barPct);
-  document.getElementById('bar-bonus').style.width = bonusPct+'%';
-  document.getElementById('bar-bonus').style.left = barPct+'%';
-
-  var formula = '('+c.done+' + 0.5×'+c.half+') ÷ '+c.total+' = '+c.base.toFixed(2);
-  if (c.bonus > 0) formula += '  +бонус '+c.bonus.toFixed(2)+' = '+c.kd.toFixed(2);
-  document.getElementById('kd-formula').textContent = formula;
-
-  // save history
-  saveHistoryToday(c.kd);
-
-  // all done?
-  var allDone = c.total > 0 && c.done === c.total;
-  if (allDone && !wasAllDone && state.lastCongratsDate !== todayKey()) {
-    state.lastCongratsDate = todayKey();
-    save();
-    showCongrats();
-  }
-  wasAllDone = allDone;
-}
-
-function saveHistoryToday(kd) {
-  if (!state.history) state.history = {};
-  state.history[todayKey()] = parseFloat(kd.toFixed(2));
-  save();
-}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
 function rowHTML(t, type) {
-  var dc = t.status==='done' ? ' done' : t.status==='half' ? ' half' : '';
-  var dot = t.status==='done' ? '#30d158' : t.status==='half' ? '#ff9f0a' : '#3a3a3c';
+  var dc=t.status==='done'?' done':t.status==='half'?' half':'';
+  var dot=t.status==='done'?'#30d158':t.status==='half'?'#ff9f0a':'#3a3a3c';
   return '<div class="task-item">'
     +'<div class="task-dot" style="background:'+dot+'"></div>'
-    +'<div class="task-name'+dc+'">'+esc(t.name)+'</div>'
+    +'<div class="task-info"><div class="task-name'+dc+'">'+esc(t.name)+'</div></div>'
     +'<div class="seg">'
-    +'<button class="seg-btn s-none'+(t.status==='none'?' on':'')+'" onclick="setS(\''+t.id+'\',\''+type+'\',\'none\')">—</button>'
-    +'<button class="seg-btn s-half'+(t.status==='half'?' on':'')+'" onclick="setS(\''+t.id+'\',\''+type+'\',\'half\')">½</button>'
-    +'<button class="seg-btn s-done'+(t.status==='done'?' on':'')+'" onclick="setS(\''+t.id+'\',\''+type+'\',\'done\')">✓</button>'
+    +'<button class="seg-btn s-none'+(t.status==='none'?' on':'')+'" onclick="setS(\''+t.id+'\',\''+type+'\',\'none\');vib()">—</button>'
+    +'<button class="seg-btn s-half'+(t.status==='half'?' on':'')+'" onclick="setS(\''+t.id+'\',\''+type+'\',\'half\');vib()">½</button>'
+    +'<button class="seg-btn s-done'+(t.status==='done'?' on':'')+'" onclick="setS(\''+t.id+'\',\''+type+'\',\'done\');vib()">✓</button>'
     +'</div>'
-    +'<button class="del-btn" onclick="delTask(\''+t.id+'\',\''+type+'\')">×</button>'
+    +'<button class="del-btn" onclick="delTask(\''+t.id+'\',\''+type+'\');vib()">×</button>'
     +'</div>';
 }
 
-function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-function setS(id, type, status) {
-  var arr = state[type];
-  for (var i=0;i<arr.length;i++) { if(arr[i].id===id){ arr[i].status=status; break; } }
-  save(); renderToday();
+function dlRowHTML(t) {
+  var cl = t.deadline ? deadlineColor(t.deadline) : {color:'#636366',bg:'rgba(99,99,102,.18)',text:'нет даты',emoji:'⚪️'};
+  var dc = t.done ? ' done' : '';
+  var dot = t.done ? '#30d158' : cl.color;
+  return '<div class="task-item">'
+    +'<div class="task-dot" style="background:'+dot+'"></div>'
+    +'<div class="task-info">'
+    +'<div class="task-name'+dc+'">'+esc(t.name)+'</div>'
+    +(t.deadline?'<div class="deadline-badge" style="background:'+cl.bg+';color:'+cl.color+';" onclick="openDLModalEdit(\''+t.id+'\');vib()">'+cl.emoji+' '+cl.text+'</div>':'')
+    +'</div>'
+    +'<button class="seg-btn s-done'+(t.done?' on':'')+'" style="border:none;border-radius:11px;background:'+(t.done?'#30d158':'var(--bg2)')+';color:'+(t.done?'#000':'var(--text3)')+';font-size:16px;font-weight:600;min-width:46px;height:46px;cursor:pointer;font-family:var(--font);" onclick="toggleDL(\''+t.id+'\');vib()">✓</button>'
+    +'<button class="del-btn" onclick="delDL(\''+t.id+'\');vib()">×</button>'
+    +'</div>';
 }
 
-function delTask(id, type) {
-  state[type] = state[type].filter(function(x){return x.id!==id;});
-  save(); renderToday();
+function vib() { vibrate([8]); }
+
+function renderToday() {
+  var rl=document.getElementById('req-list');
+  rl.innerHTML=state.req.length?state.req.map(function(t){return rowHTML(t,'req');}).join(''):'<div class="empty-row">Нет дел — добавь ниже</div>';
+  var ol=document.getElementById('opt-list');
+  ol.innerHTML=state.opt.length?state.opt.map(function(t){return rowHTML(t,'opt');}).join(''):'<div class="empty-row">Нет дел — добавь ниже</div>';
+  var dl=document.getElementById('dl-list');
+  if(!state.deadlines) state.deadlines=[];
+  dl.innerHTML=state.deadlines.length?state.deadlines.map(function(t){return dlRowHTML(t);}).join(''):'<div class="empty-row">Нет дел с дедлайном — добавь ниже</div>';
+
+  var c=calcKD();
+  document.getElementById('st-done').textContent=c.done||0;
+  document.getElementById('st-half').textContent=c.half||0;
+  document.getElementById('st-left').textContent=c.valid?(c.total-c.done-c.half):0;
+
+  if(!c.valid){
+    document.getElementById('kd-num').textContent='—';
+    document.getElementById('kd-grade').textContent='добавь дела';
+    document.getElementById('kd-grade').style.color='rgba(235,235,245,.5)';
+    document.getElementById('kd-num').style.color='#fff';
+    document.getElementById('bar-base').style.width='0%';
+    document.getElementById('bar-bonus').style.width='0%';
+    document.getElementById('kd-formula').textContent='';
+    return;
+  }
+  var cl=colorForKD(c.kd);
+  document.getElementById('kd-num').textContent=c.kd.toFixed(2);
+  document.getElementById('kd-num').style.color=cl.color;
+  document.getElementById('kd-grade').textContent=cl.label;
+  document.getElementById('kd-grade').style.color=cl.color;
+  var bp=Math.min(c.base*100,100);
+  document.getElementById('bar-base').style.width=bp+'%';
+  document.getElementById('bar-base').style.background=cl.color;
+  var bonp=Math.min(c.bonus*100,100-bp);
+  document.getElementById('bar-bonus').style.width=bonp+'%';
+  document.getElementById('bar-bonus').style.left=bp+'%';
+  var f='('+c.done+' + 0.5×'+c.half+') ÷ '+c.total+' = '+c.base.toFixed(2);
+  if(c.bonus>0) f+='  +бонус '+c.bonus.toFixed(2)+' = '+c.kd.toFixed(2);
+  document.getElementById('kd-formula').textContent=f;
+  if(!state.history) state.history={};
+  state.history[todayKey()]=parseFloat(c.kd.toFixed(2));
+  save();
+  var allDone=c.total>0&&c.done===c.total;
+  if(allDone&&!wasAllDone&&state.lastCongratsDate!==todayKey()&&settings.congrats){
+    state.lastCongratsDate=todayKey(); save(); showCongrats();
+  }
+  wasAllDone=allDone;
 }
 
-function addTask(type) {
-  var inp = document.getElementById(type+'-input');
-  var name = inp.value.trim();
-  if (!name) return;
-  state[type].push({id:'t'+(state.nextId++), name:name, status:'none'});
-  inp.value = '';
+function setS(id,type,status){
+  var arr=state[type];
+  for(var i=0;i<arr.length;i++){if(arr[i].id===id){arr[i].status=status;break;}}
   save(); renderToday();
 }
-
-function resetDay() {
-  if (!confirm('Сбросить все дела?')) return;
+function delTask(id,type){state[type]=state[type].filter(function(x){return x.id!==id;});save();renderToday();}
+function addTask(type){
+  var inp=document.getElementById(type+'-input');
+  var name=inp.value.trim(); if(!name)return;
+  vibrate([6]);
+  state[type].push({id:'t'+(state.nextId++),name:name,status:'none'});
+  inp.value=''; save(); renderToday();
+}
+function resetDay(){
+  if(!confirm('Сбросить все дела?'))return;
   state.req.forEach(function(t){t.status='none';});
   state.opt.forEach(function(t){t.status='none';});
-  wasAllDone = false;
-  save(); renderToday();
+  wasAllDone=false; save(); renderToday();
 }
 
-// ===== CONGRATS =====
-function showCongrats() {
-  var pick = CONGRATS[Math.floor(Math.random()*CONGRATS.length)];
-  document.getElementById('c-emoji').textContent = pick[0];
-  document.getElementById('c-text').textContent = pick[1];
-  var overlay = document.getElementById('congrats');
-  overlay.classList.add('show');
-  setTimeout(function(){ overlay.classList.remove('show'); }, 2500);
+// DEADLINE TASKS
+function toggleDL(id){
+  var t=state.deadlines.find(function(x){return x.id===id;});
+  if(t){t.done=!t.done;save();renderToday();}
 }
-document.getElementById('congrats').addEventListener('click', function(){
-  this.classList.remove('show');
-});
+function delDL(id){state.deadlines=state.deadlines.filter(function(x){return x.id!==id;});save();renderToday();}
 
-// ===== HISTORY =====
-function formatDateRU(key) {
-  var parts = key.split('-');
-  var d = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
-  var days = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
-  var months = ['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
+var pendingDLName = '';
+function openDLModalNew(){
+  var inp=document.getElementById('dl-input');
+  pendingDLName=inp.value.trim();
+  if(!pendingDLName){inp.focus();return;}
+  vibrate([6]);
+  dlEditId=null;
+  document.getElementById('dl-modal-title').textContent='Срок выполнения';
+  document.getElementById('dl-date-input').value='';
+  document.getElementById('dl-modal').classList.add('show');
+}
+function openDLModalEdit(id){
+  dlEditId=id;
+  var t=state.deadlines.find(function(x){return x.id===id;});
+  document.getElementById('dl-modal-title').textContent='Изменить дедлайн';
+  document.getElementById('dl-date-input').value=t&&t.deadline?t.deadline:'';
+  document.getElementById('dl-modal').classList.add('show');
+}
+function closeDLModal(){
+  document.getElementById('dl-modal').classList.remove('show');
+  dlEditId=null;
+}
+function saveDL(){
+  var date=document.getElementById('dl-date-input').value;
+  vibrate([6,30,6]);
+  if(dlEditId){
+    var t=state.deadlines.find(function(x){return x.id===dlEditId;});
+    if(t){t.deadline=date;}
+  } else {
+    if(!pendingDLName)return;
+    state.deadlines.push({id:'d'+(state.nextId++),name:pendingDLName,deadline:date,done:false});
+    document.getElementById('dl-input').value='';
+    pendingDLName='';
+  }
+  save(); closeDLModal(); renderToday();
+}
+
+// CONGRATS
+function showCongrats(){
+  var pick=CONGRATS[Math.floor(Math.random()*CONGRATS.length)];
+  document.getElementById('c-emoji').textContent=pick[0];
+  document.getElementById('c-text').textContent=pick[1];
+  vibrate([10,50,10,50,20]);
+  var o=document.getElementById('congrats');
+  o.classList.add('show');
+  setTimeout(function(){o.classList.remove('show');},2800);
+}
+document.getElementById('congrats').addEventListener('click',function(){this.classList.remove('show');});
+document.getElementById('dl-modal').addEventListener('click',function(e){if(e.target===this)closeDLModal();});
+
+// HISTORY
+function formatDateRU(key){
+  var p=key.split('-');
+  var d=new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2]));
+  var days=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+  var months=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
   return days[d.getDay()]+', '+d.getDate()+' '+months[d.getMonth()];
 }
-
-function startOfWeek() {
-  var d = new Date();
-  var day = d.getDay();
-  var diff = (day === 0) ? -6 : 1 - day;
-  d.setDate(d.getDate() + diff);
-  d.setHours(0,0,0,0);
-  return d;
-}
-
-function renderHistory() {
-  var hist = state.history || {};
-  var keys = Object.keys(hist).sort().reverse();
-  var today = todayKey();
-  var sowDate = startOfWeek();
-
-  var todayItems = [];
-  var weekItems = [];
-  var olderItems = [];
-
-  keys.forEach(function(k) {
-    var d = new Date(k.replace(/-/g,'/'));
-    if (k === today) todayItems.push(k);
-    else if (d >= sowDate) weekItems.push(k);
-    else olderItems.push(k);
+function startOfWeek(){var d=new Date();var day=d.getDay();d.setDate(d.getDate()+(day===0?-6:1-day));d.setHours(0,0,0,0);return d;}
+function renderHistory(){
+  var hist=state.history||{};
+  var keys=Object.keys(hist).sort().reverse();
+  var today=todayKey(),sow=startOfWeek(),ti=[],wi=[],oi=[];
+  keys.forEach(function(k){
+    var d=new Date(k.replace(/-/g,'/'));
+    if(k===today)ti.push(k);
+    else if(d>=sow)wi.push(k);
+    else oi.push(k);
   });
-
-  function buildRows(items) {
-    if (!items.length) return '<div class="hist-empty">Нет данных</div>';
+  function buildRows(items){
+    if(!items.length)return'<div class="hist-empty">Нет данных</div>';
     return items.map(function(k){
-      var kd = hist[k];
-      var cl = colorForKD(kd);
-      return '<div class="hist-row">'
-        +'<div class="hist-dot" style="background:'+cl.color+'"></div>'
-        +'<div class="hist-date">'+formatDateRU(k)+'</div>'
-        +'<div>'
-          +'<div class="hist-kd" style="color:'+cl.color+'">'+kd.toFixed(2)+'</div>'
-          +'<div class="hist-color-label">'+cl.label+'</div>'
-        +'</div>'
-        +'</div>';
+      var kd=hist[k];var cl=colorForKD(kd);
+      return'<div class="hist-row"><div class="hist-dot" style="background:'+cl.color+'"></div><div class="hist-date">'+formatDateRU(k)+'</div><div style="text-align:right;"><div class="hist-kd" style="color:'+cl.color+'">'+kd.toFixed(2)+'</div><div class="hist-color-label">'+cl.label+'</div></div></div>';
     }).join('');
   }
-
-  document.getElementById('hist-today-card').innerHTML = buildRows(todayItems);
-  document.getElementById('hist-week-card').innerHTML = buildRows(weekItems);
-  document.getElementById('hist-older-card').innerHTML = buildRows(olderItems);
+  document.getElementById('hist-today-card').innerHTML=buildRows(ti);
+  document.getElementById('hist-week-card').innerHTML=buildRows(wi);
+  document.getElementById('hist-older-card').innerHTML=buildRows(oi);
 }
 
-// ===== STATS =====
-var currentPeriod = 'week';
-
-function setPeriod(p, btn) {
-  currentPeriod = p;
+// STATS
+function setPeriod(p,btn){
+  currentPeriod=p;
   document.querySelectorAll('.period-btn').forEach(function(b){b.classList.remove('active');});
-  btn.classList.add('active');
+  btn.classList.add('active'); vibrate([6]);
   renderStats();
 }
-
-function renderStats() {
-  var hist = state.history || {};
-  var now = new Date();
-  var keys = Object.keys(hist);
-
-  var filtered = keys.filter(function(k){
-    var d = new Date(k.replace(/-/g,'/'));
-    if (currentPeriod === 'week') {
-      var sw = startOfWeek();
-      return d >= sw;
-    } else if (currentPeriod === 'month') {
-      return d.getFullYear()===now.getFullYear() && d.getMonth()===now.getMonth();
-    } else {
-      return d.getFullYear()===now.getFullYear();
-    }
+function renderStats(){
+  var hist=state.history||{},now=new Date();
+  var keys=Object.keys(hist).filter(function(k){
+    var d=new Date(k.replace(/-/g,'/'));
+    if(currentPeriod==='week')return d>=startOfWeek();
+    if(currentPeriod==='month')return d.getFullYear()===now.getFullYear()&&d.getMonth()===now.getMonth();
+    return d.getFullYear()===now.getFullYear();
   }).sort();
-
-  var vals = filtered.map(function(k){return hist[k];});
-  var avg = vals.length ? (vals.reduce(function(a,b){return a+b;},0)/vals.length) : 0;
-  var best = vals.length ? Math.max.apply(null,vals) : 0;
-  var perfect = vals.filter(function(v){return v>=0.9;}).length;
-
-  var avgCl = vals.length ? colorForKD(avg) : {color:'#fff'};
-  var bestCl = vals.length ? colorForKD(best) : {color:'#fff'};
-
-  document.getElementById('sum-avg').textContent = vals.length ? avg.toFixed(2) : '—';
-  document.getElementById('sum-avg').style.color = avgCl.color;
-  document.getElementById('sum-days').textContent = vals.length || '—';
-  document.getElementById('sum-best').textContent = vals.length ? best.toFixed(2) : '—';
-  document.getElementById('sum-best').style.color = bestCl.color;
-  document.getElementById('sum-perfect').textContent = perfect || '—';
-  document.getElementById('sum-perfect').style.color = perfect ? '#bf5af2' : '#fff';
-
-  var titles = {week:'КД по дням недели', month:'КД по дням месяца', year:'КД по месяцам'};
-  document.getElementById('chart-title').textContent = titles[currentPeriod];
-
-  var chart = document.getElementById('bar-chart');
-  if (!filtered.length) { chart.innerHTML = '<div style="color:var(--text3);font-size:13px;padding:20px 0;">Нет данных за период</div>'; return; }
-
-  var maxVal = Math.max.apply(null, vals);
-  chart.innerHTML = filtered.map(function(k, i){
-    var v = hist[k];
-    var cl = colorForKD(v);
-    var h = maxVal > 0 ? Math.round((v/maxVal)*72) : 3;
-    var lbl = currentPeriod==='year' ? k.slice(5,7) : k.slice(8);
-    return '<div class="bar-col">'
-      +'<div class="bar-fill" style="height:'+h+'px;background:'+cl.color+';"></div>'
-      +'<div class="bar-lbl">'+lbl+'</div>'
-      +'</div>';
+  var vals=keys.map(function(k){return hist[k];});
+  var avg=vals.length?vals.reduce(function(a,b){return a+b;},0)/vals.length:0;
+  var best=vals.length?Math.max.apply(null,vals):0;
+  var perfect=vals.filter(function(v){return v>=0.9;}).length;
+  var ac=vals.length?colorForKD(avg):{color:'#fff'};
+  var bc=vals.length?colorForKD(best):{color:'#fff'};
+  document.getElementById('sum-avg').textContent=vals.length?avg.toFixed(2):'—';
+  document.getElementById('sum-avg').style.color=ac.color;
+  document.getElementById('sum-days').textContent=vals.length||'—';
+  document.getElementById('sum-best').textContent=vals.length?best.toFixed(2):'—';
+  document.getElementById('sum-best').style.color=bc.color;
+  document.getElementById('sum-perfect').textContent=perfect||'—';
+  document.getElementById('sum-perfect').style.color=perfect?'#bf5af2':'#fff';
+  var titles={week:'КД по дням недели',month:'КД по дням месяца',year:'КД по месяцам'};
+  document.getElementById('chart-title').textContent=titles[currentPeriod];
+  var chart=document.getElementById('bar-chart');
+  if(!keys.length){chart.innerHTML='<div style="color:rgba(235,235,245,.5);font-size:14px;padding:20px 0;">Нет данных за период</div>';return;}
+  var maxVal=Math.max.apply(null,vals);
+  chart.innerHTML=keys.map(function(k){
+    var v=hist[k];var cl=colorForKD(v);
+    var h=maxVal>0?Math.round((v/maxVal)*80):4;
+    var lbl=currentPeriod==='year'?k.slice(5,7):k.slice(8);
+    return'<div class="bar-col"><div class="bar-fill" style="height:'+h+'px;background:'+cl.color+';"></div><div class="bar-lbl">'+lbl+'</div></div>';
   }).join('');
 }
 
-// ===== TABS =====
-function switchTab(name, btn) {
+function clearHistory(){
+  if(!confirm('Удалить всю историю?'))return;
+  state.history={};save();
+  renderHistory();renderStats();
+}
+
+function switchTab(name,btn){
+  vibrate([6]);
   document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
   document.getElementById('screen-'+name).classList.add('active');
   document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
   btn.classList.add('active');
-  if (name==='history') renderHistory();
-  if (name==='stats') renderStats();
+  if(name==='history')renderHistory();
+  if(name==='stats')renderStats();
 }
 
-// ===== INIT =====
-function setDate() {
-  var now = new Date();
-  var days = ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'];
-  var months = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
-  document.getElementById('header-date').innerHTML = days[now.getDay()]+'<br>'+now.getDate()+' '+months[now.getMonth()];
+function setDate(){
+  var now=new Date();
+  var days=['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'];
+  var months=['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+  document.getElementById('header-date').innerHTML=days[now.getDay()]+'<br>'+now.getDate()+' '+months[now.getMonth()];
 }
 
-document.getElementById('req-input').addEventListener('keydown', function(e){ if(e.key==='Enter') addTask('req'); });
-document.getElementById('opt-input').addEventListener('keydown', function(e){ if(e.key==='Enter') addTask('opt'); });
+document.getElementById('req-input').addEventListener('keydown',function(e){if(e.key==='Enter')addTask('req');});
+document.getElementById('opt-input').addEventListener('keydown',function(e){if(e.key==='Enter')addTask('opt');});
+document.getElementById('dl-input').addEventListener('keydown',function(e){if(e.key==='Enter')openDLModalNew();});
 
-state = loadState();
+state=loadState();
+settings=loadSettings();
+document.getElementById('toggle-vibro').checked=settings.vibro;
+document.getElementById('toggle-congrats').checked=settings.congrats;
+if(!state.deadlines)state.deadlines=[];
 setDate();
 renderToday();
 </script>
